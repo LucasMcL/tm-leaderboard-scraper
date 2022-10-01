@@ -1,5 +1,5 @@
 import * as puppeteer from 'puppeteer';
-import { removeDuplicates, writeAsCsv, writeAsJson } from './util';
+import { removeDuplicates, validateResults, writeAsCsv, writeAsJson } from './util';
 
 const url = 'https://account.asmodee.net/en/game/TerraformingMars/rankings';
 
@@ -92,8 +92,7 @@ async function scrape(): Promise<PlayerData[]> {
 scrape()
   .then(async (players) => {
     const filteredPlayers = removeDuplicates(players);
-    console.log(`total filtered player count: ${filteredPlayers.length}`);
-    console.log(`rank of last scraped player: ${filteredPlayers[filteredPlayers.length - 1].rank}`);
+    validateResults(filteredPlayers);
     await writeAsCsv(filteredPlayers);
     writeAsJson(filteredPlayers);
   })

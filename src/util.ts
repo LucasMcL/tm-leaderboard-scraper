@@ -50,3 +50,13 @@ export const removeDuplicates = (playerData: PlayerData[]): PlayerData[] => {
       i === self.findIndex((player) => player.rank === value.rank),
   );
 };
+
+export const validateResults = (filteredPlayers: PlayerData[]): void => {
+  const filteredPlayerCount = filteredPlayers.length;
+  const lastPlayerRank = Number(filteredPlayers[filteredPlayers.length - 1].rank);
+  console.log(`total filtered player count: ${filteredPlayerCount}`);
+  console.log(`rank of last scraped player: ${lastPlayerRank}`);
+  if (filteredPlayerCount !== lastPlayerRank) {
+    console.warn('Warning: rank of last scraped player does not match total number of scraped players.  Web scraping may have been inaccurate.');
+  }
+}
