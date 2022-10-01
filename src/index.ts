@@ -73,7 +73,7 @@ async function scrape(): Promise<PlayerData[]> {
       await nextPageBtn.click();
       const visiblePlayers = await getPlayersFromTable(page);
       allPlayers.push(...visiblePlayers);
-      await page.waitForTimeout(250);
+      await page.waitForTimeout(1000);
       isNextPage = await getIsNextPage(page);
       console.log(`${allPlayers.length} players scraped.`);
     }
@@ -93,6 +93,7 @@ scrape()
   .then(async (players) => {
     const filteredPlayers = removeDuplicates(players);
     console.log(`total filtered player count: ${filteredPlayers.length}`);
+    console.log(`rank of last scraped player: ${filteredPlayers[filteredPlayers.length - 1].rank}`);
     await writeAsCsv(filteredPlayers);
     writeAsJson(filteredPlayers);
   })
